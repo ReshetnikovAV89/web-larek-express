@@ -1,23 +1,28 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { faker } from "@faker-js/faker";
 import Product from "../models/product";
+import BadRequestError from "../errors/bad-request-error";
 
-export const createOrder = async (req: Request, res: Response) => {
+export const createOrder = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { items, total, payment, email, phone, address } = req.body;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
-      return res.status(400).json({ message: "Items are required" });
+      return next(new BadRequestError("Items are required"));
     }
 
     if (!payment || !email || !phone || !address || total === undefined) {
-      return res.status(400).json({ message: "Invalid order data" });
+      return next(new BadRequestError("Invalid order data"));
     }
 
     const products = await Product.find({ _id: { $in: items } });
 
     if (products.length !== items.length) {
-      return res.status(400).json({ message: "Some products not found" });
+      return next(new BadRequestError("Some products not found"));
     }
 
     const hasUnavailableProduct = products.some(
@@ -25,7 +30,7 @@ export const createOrder = async (req: Request, res: Response) => {
     );
 
     if (hasUnavailableProduct) {
-      return res.status(400).json({ message: "Some products are unavailable" });
+      return next(new BadRequestError("Some products are unavailable"));
     }
 
     const calculatedTotal = products.reduce(
@@ -34,7 +39,7 @@ export const createOrder = async (req: Request, res: Response) => {
     );
 
     if (calculatedTotal !== total) {
-      return res.status(400).json({ message: "Total amount is invalid" });
+      return next(new BadRequestError("Total amount is invalid"));
     }
 
     return res.json({
@@ -42,7 +47,6 @@ export const createOrder = async (req: Request, res: Response) => {
       total: calculatedTotal,
     });
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Internal server error" });
+    return next(err);
   }
 };

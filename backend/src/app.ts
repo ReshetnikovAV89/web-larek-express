@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import productRouter from "./routes/product";
 import orderRouter from "./routes/order";
+import errorHandler from "./middlewares/error-handler";
 
 const { PORT = 3000 } = process.env;
 
@@ -24,6 +25,8 @@ app.use("/order", orderRouter);
 app.get("/", (_req, res) => {
   res.json({ message: "Server is running" });
 });
+
+app.use(errorHandler);
 
 mongoose
   .connect(DB_ADDRESS)
