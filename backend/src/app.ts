@@ -6,6 +6,7 @@ import { errors } from "celebrate";
 import productRouter from "./routes/product";
 import orderRouter from "./routes/order";
 import errorHandler from "./middlewares/error-handler";
+import { errorLogger, requestLogger } from "./middlewares/logger";
 
 const { PORT = 3000 } = process.env;
 
@@ -19,6 +20,8 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "../public")));
 
+app.use(requestLogger);
+
 app.use("/product", productRouter);
 
 app.use("/order", orderRouter);
@@ -28,6 +31,8 @@ app.get("/", (_req, res) => {
 });
 
 app.use(errors());
+
+app.use(errorLogger);
 
 app.use(errorHandler);
 
