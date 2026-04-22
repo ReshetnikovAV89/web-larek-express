@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import mongoose from "mongoose";
 import cors from "cors";
+import { errors } from "celebrate";
 import productRouter from "./routes/product";
 import orderRouter from "./routes/order";
 import errorHandler from "./middlewares/error-handler";
@@ -25,6 +26,8 @@ app.use("/order", orderRouter);
 app.get("/", (_req, res) => {
   res.json({ message: "Server is running" });
 });
+
+app.use(errors());
 
 app.use(errorHandler);
 
