@@ -15,7 +15,7 @@ import auth from "../middlewares/auth";
 const router = Router();
 
 router.get("/", getProducts);
-router.post("/", validateCreateProduct, createProduct);
+router.post("/", auth, validateCreateProduct, createProduct);
 router.patch(
   "/:productId",
   auth,
