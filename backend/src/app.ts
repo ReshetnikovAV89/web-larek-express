@@ -2,9 +2,11 @@ import express from "express";
 import path from "path";
 import mongoose from "mongoose";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { errors } from "celebrate";
 import productRouter from "./routes/product";
 import orderRouter from "./routes/order";
+import authRouter from "./routes/auth";
 import errorHandler from "./middlewares/error-handler";
 import { errorLogger, requestLogger } from "./middlewares/logger";
 
@@ -18,6 +20,8 @@ app.use(cors());
 
 app.use(express.json());
 
+app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, "../public")));
 
 app.use(requestLogger);
@@ -25,6 +29,8 @@ app.use(requestLogger);
 app.use("/product", productRouter);
 
 app.use("/order", orderRouter);
+
+app.use("/auth", authRouter);
 
 app.get("/", (_req, res) => {
   res.json({ message: "Server is running" });
