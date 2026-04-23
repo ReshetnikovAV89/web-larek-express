@@ -1,10 +1,10 @@
-import { NextFunction, Request, Response } from "express";
-import BadRequestError from "../errors/bad-request-error";
+import { NextFunction, Request, Response } from 'express';
+import BadRequestError from '../errors/bad-request-error';
 
-export const uploadFile = (req: Request, res: Response, next: NextFunction) => {
+const uploadFile = (req: Request, res: Response, next: NextFunction) => {
   try {
     if (!req.file) {
-      return next(new BadRequestError("File is required"));
+      return next(new BadRequestError('File is required'));
     }
 
     return res.json({
@@ -15,3 +15,5 @@ export const uploadFile = (req: Request, res: Response, next: NextFunction) => {
     return next(err);
   }
 };
+
+export default uploadFile;

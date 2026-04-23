@@ -1,15 +1,15 @@
-import path from "path";
-import multer from "multer";
-import { faker } from "@faker-js/faker";
+import path from 'path';
+import multer from 'multer';
+import { faker } from '@faker-js/faker';
 
-const { UPLOAD_PATH_TEMP = "temp" } = process.env;
+const { UPLOAD_PATH_TEMP = 'temp' } = process.env;
 
 const allowedMimeTypes = [
-  "image/png",
-  "image/jpg",
-  "image/jpeg",
-  "image/gif",
-  "image/svg+xml",
+  'image/png',
+  'image/jpg',
+  'image/jpeg',
+  'image/gif',
+  'image/svg+xml',
 ];
 
 const storage = multer.diskStorage({
@@ -24,13 +24,13 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileFilter: multer.Options["fileFilter"] = (_req, file, cb) => {
+const fileFilter: multer.Options['fileFilter'] = (_req, file, cb) => {
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
     return;
   }
 
-  cb(new Error("Invalid file type"));
+  cb(new Error('Invalid file type'));
 };
 
 export default multer({

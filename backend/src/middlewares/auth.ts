@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import BaseError from "../errors/base-error";
-import { verifyToken } from "../utils/auth";
+import { NextFunction, Request, Response } from 'express';
+import BaseError from '../errors/base-error';
+import { verifyToken } from '../utils/auth';
 
 interface AuthRequest extends Request {
   user?: {
@@ -8,13 +8,13 @@ interface AuthRequest extends Request {
   };
 }
 
-const extractBearerToken = (header: string) => header.replace("Bearer ", "");
+const extractBearerToken = (header: string) => header.replace('Bearer ', '');
 
 export default (req: AuthRequest, _res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
 
-  if (!authorization || !authorization.startsWith("Bearer ")) {
-    return next(new BaseError("Authorization required", 401));
+  if (!authorization || !authorization.startsWith('Bearer ')) {
+    return next(new BaseError('Authorization required', 401));
   }
 
   try {
@@ -25,6 +25,6 @@ export default (req: AuthRequest, _res: Response, next: NextFunction) => {
 
     return next();
   } catch (err) {
-    return next(new BaseError("Authorization required", 401));
+    return next(new BaseError('Authorization required', 401));
   }
 };

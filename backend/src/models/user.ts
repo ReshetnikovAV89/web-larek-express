@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
 export interface IUserToken {
   token: string;
@@ -26,7 +26,7 @@ const userSchema = new Schema<IUser>({
     type: String,
     minlength: 2,
     maxlength: 30,
-    default: "Ё-мое",
+    default: 'Ё-мое',
   },
   email: {
     type: String,
@@ -46,4 +46,4 @@ const userSchema = new Schema<IUser>({
   },
 });
 
-export default mongoose.model<IUser>("user", userSchema);
+export default mongoose.model<IUser>('user', userSchema);

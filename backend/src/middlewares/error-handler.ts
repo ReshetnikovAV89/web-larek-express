@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from "express";
-import BaseError from "../errors/base-error";
+import { NextFunction, Request, Response } from 'express';
+import BaseError from '../errors/base-error';
 
 export default (
   err: Error,
@@ -14,6 +14,6 @@ export default (
   }
 
   return res.status(500).json({
-    message: "Internal server error",
+    message: 'Internal server error',
   });
 };
