@@ -7,6 +7,7 @@ import { errors } from "celebrate";
 import productRouter from "./routes/product";
 import orderRouter from "./routes/order";
 import authRouter from "./routes/auth";
+import uploadRouter from "./routes/upload";
 import errorHandler from "./middlewares/error-handler";
 import { errorLogger, requestLogger } from "./middlewares/logger";
 
@@ -31,6 +32,8 @@ app.use("/product", productRouter);
 app.use("/order", orderRouter);
 
 app.use("/auth", authRouter);
+
+app.use("/upload", uploadRouter);
 
 app.get("/", (_req, res) => {
   res.json({ message: "Server is running" });
