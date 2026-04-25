@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import BaseError from '../errors/base-error';
+import UnauthorizedError from '../errors/unauthorized-error';
 import { verifyToken } from '../utils/auth';
 
 interface AuthRequest extends Request {
@@ -14,7 +14,7 @@ export default (req: AuthRequest, _res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    return next(new BaseError('Authorization required', 401));
+    return next(new UnauthorizedError('Authorization required'));
   }
 
   try {
@@ -25,6 +25,6 @@ export default (req: AuthRequest, _res: Response, next: NextFunction) => {
 
     return next();
   } catch (err) {
-    return next(new BaseError('Authorization required', 401));
+    return next(new UnauthorizedError('Authorization required'));
   }
 };
