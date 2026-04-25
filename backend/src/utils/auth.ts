@@ -2,7 +2,7 @@ import { CookieOptions } from 'express';
 import jwt from 'jsonwebtoken';
 import ms, { StringValue } from 'ms';
 
-const JWT_SECRET = 'super-strong-secret';
+const { JWT_SECRET = 'super-strong-secret' } = process.env;
 
 const getExpiry = (
   value: string | undefined,

@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
@@ -11,9 +12,10 @@ import uploadRouter from './routes/upload';
 import errorHandler from './middlewares/error-handler';
 import { errorLogger, requestLogger } from './middlewares/logger';
 
-const { PORT = 3000 } = process.env;
-
-const DB_ADDRESS = 'mongodb://127.0.0.1:27017/weblarek';
+const {
+  PORT = 3000,
+  DB_ADDRESS = 'mongodb://127.0.0.1:27017/weblarek',
+} = process.env;
 
 const app = express();
 
